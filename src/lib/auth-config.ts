@@ -61,15 +61,24 @@ export const authConfig: NextAuthConfig = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        if (
-          credentials?.username === "admin" &&
-          credentials?.password === "admin"
-        ) {
-          return {
-            id: "dev-admin",
-            name: "Dev Admin",
-            email: "admin@vitalis.local",
-          };
+        const users = [
+          {
+            username: process.env.ADMIN_USER ?? "admin",
+            password: process.env.ADMIN_PASSWORD ?? "admin",
+            id: "admin",
+            name: "Yonatan Perlin",
+            email: process.env.ADMIN_EMAIL ?? "jonathanperlin@gmail.com",
+          },
+        ];
+
+        const matched = users.find(
+          (u) =>
+            credentials?.username === u.username &&
+            credentials?.password === u.password,
+        );
+
+        if (matched) {
+          return { id: matched.id, name: matched.name, email: matched.email };
         }
         return null;
       },
