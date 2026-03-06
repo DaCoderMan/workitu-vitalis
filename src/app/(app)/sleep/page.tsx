@@ -425,11 +425,60 @@ export default function SleepPage() {
           fetch("/api/sleep/analysis?days=7"),
           fetch("/api/readings?days=30"),
         ]);
+
+        // Parse sleep analysis summary
         if (analysisRes.status === "fulfilled" && analysisRes.value.ok) {
           const d = await analysisRes.value.json();
-          if (d && d.gpa) setAnalysis(d);
+          if (d?.summary) {
+            const s = d.summary;
+            setAnalysis((prev) => ({
+              ...prev,
+              gpa: s.avg_grade || prev.gpa,
+              gpaNumeric: s.avg_gpa || prev.gpaNumeric,
+              consistency: s.avg_efficiency ? Math.round(s.avg_efficiency) : prev.consistency,
+            }));
+          }
+          // Parse nightly data into stages chart
+          if (d?.nights?.length > 0) {
+            const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+            setStages(
+              d.nights.slice(0, 7).reverse().map((n: { date: string; sleep_stages?: { awake: number; light: number; deep: number; rem: number } }) => ({
+                day: dayNames[new Date(n.date).getDay()],
+                awake: n.sleep_stages?.awake ?? 15,
+                light: n.sleep_stages?.light ?? 160,
+                deep: n.sleep_stages?.deep ?? 60,
+                rem: n.sleep_stages?.rem ?? 70,
+              }))
+            );
+          }
         }
-        // Could parse readings for stages and circadian data
+
+        // Parse readings for circadian midpoint data
+        if (readingsRes.status === "fulfilled" && readingsRes.value.ok) {
+          const d = await readingsRes.value.json();
+          const raw = d?.readings;
+          if (Array.isArray(raw) && raw.length > 0) {
+            const circadianData = raw
+              .filter((r: Record<string, unknown>) => {
+                const m = (r.metrics || r) as Record<string, unknown>;
+                return m.sleep_midpoint != null;
+              })
+              .map((r: Record<string, unknown>) => {
+                const m = (r.metrics || r) as Record<string, unknown>;
+                const mp = new Date(m.sleep_midpoint as string);
+                const hours = mp.getHours() + mp.getMinutes() / 60;
+                return {
+                  date: new Date(r.date as string).toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "numeric",
+                  }),
+                  midpoint: parseFloat(hours.toFixed(2)),
+                };
+              })
+              .reverse();
+            if (circadianData.length > 0) setCircadian(circadianData);
+          }
+        }
       } catch {
         // use mock data
       } finally {

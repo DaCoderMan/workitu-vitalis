@@ -35,6 +35,7 @@ import {
   CheckCircle2,
   FileText,
   AlertTriangle,
+  Database,
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
@@ -380,6 +381,70 @@ function MedicalDisclaimerCard() {
 }
 
 /* ------------------------------------------------------------------ */
+/*  Seed Demo Data                                                     */
+/* ------------------------------------------------------------------ */
+
+function SeedDemoData() {
+  const [seeding, setSeeding] = useState(false);
+  const [seeded, setSeeded] = useState(false);
+
+  const handleSeed = async () => {
+    setSeeding(true);
+    try {
+      const res = await fetch("/api/seed", { method: "POST" });
+      if (res.ok) {
+        setSeeded(true);
+        setTimeout(() => setSeeded(false), 3000);
+      }
+    } catch {
+      // silent
+    } finally {
+      setSeeding(false);
+    }
+  };
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <Database className="size-5 text-cyan-400" />
+          Demo Data
+        </CardTitle>
+        <CardDescription>
+          Populate 30 days of sample health data for testing
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <p className="text-sm text-muted-foreground">
+          This will generate realistic HRV, sleep, mood, and recovery data along
+          with AI-generated insights. Existing demo data will be replaced.
+        </p>
+        <Button
+          className="w-full"
+          variant="outline"
+          onClick={handleSeed}
+          disabled={seeding}
+        >
+          {seeded ? (
+            <>
+              <CheckCircle2 className="mr-2 size-4 text-emerald-400" />
+              Data Seeded!
+            </>
+          ) : seeding ? (
+            "Generating..."
+          ) : (
+            <>
+              <Database className="mr-2 size-4" />
+              Seed Demo Data
+            </>
+          )}
+        </Button>
+      </CardContent>
+    </Card>
+  );
+}
+
+/* ------------------------------------------------------------------ */
 /*  Delete Data                                                        */
 /* ------------------------------------------------------------------ */
 
@@ -479,7 +544,11 @@ export default function SettingsPage() {
       <Separator />
 
       <div className="grid gap-6 lg:grid-cols-2">
+        <SeedDemoData />
         <MedicalDisclaimerCard />
+      </div>
+
+      <div className="grid gap-6 lg:grid-cols-2">
         <DeleteDataSection />
       </div>
     </div>

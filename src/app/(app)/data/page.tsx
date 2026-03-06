@@ -397,7 +397,32 @@ export default function DataPage() {
         const res = await fetch("/api/readings?days=30");
         if (res.ok) {
           const d = await res.json();
-          if (d && Array.isArray(d) && d.length > 0) setReadings(d);
+          const raw = d?.readings;
+          if (Array.isArray(raw) && raw.length > 0) {
+            setReadings(
+              raw.map((r: Record<string, unknown>, i: number) => {
+                const m = (r.metrics || r) as Record<string, unknown>;
+                const confidence = ((r.validation as Record<string, unknown>)?.confidence as number ?? 85) / 100;
+                const outliers = (r.validation as Record<string, unknown>)?.outliers as string[] | undefined;
+                return {
+                  id: (r._id as string) || `reading-${i}`,
+                  date: new Date(r.date as string).toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric",
+                  }),
+                  source: ((r.source as string) || "manual").toUpperCase().replace("_", " "),
+                  hrv: (m.hrv_rmssd as number) ?? 0,
+                  rhr: (m.resting_hr as number) ?? 0,
+                  sleepHours: parseFloat((((m.sleep_duration as number) ?? 0) / 60).toFixed(1)),
+                  steps: (m.steps as number) ?? 0,
+                  confidence: parseFloat(confidence.toFixed(2)),
+                  validated: confidence > 0.85,
+                  outlier: (outliers?.length ?? 0) > 0,
+                };
+              })
+            );
+          }
         }
       } catch {
         // use mock

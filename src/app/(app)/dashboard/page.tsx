@@ -22,35 +22,36 @@ import {
 import { cn } from "@/lib/utils";
 
 /* ------------------------------------------------------------------ */
-/*  Mock data                                                          */
+/*  Default empty state values                                         */
 /* ------------------------------------------------------------------ */
 
-const MOCK_SCORES = {
-  mood: 0.25,
-  moodLabel: "Balanced",
-  bodyBattery: 72,
-  bodyBatteryTrend: "charging",
-  hrvRecovery: 78,
-  sleepScore: 85,
-  readiness: 81,
+const EMPTY_SCORES = {
+  mood: 0,
+  moodLabel: "No Data",
+  moodState: "" as string,
+  bodyBattery: 0,
+  bodyBatteryTrend: "draining",
+  hrvRecovery: 0,
+  sleepScore: 0,
+  readiness: 0,
 };
 
-const MOCK_READINGS = {
-  hrv: 48,
-  rhr: 58,
-  sleepScore: 85,
-  steps: 8432,
+const EMPTY_READINGS = {
+  hrv: 0,
+  rhr: 0,
+  sleepScore: 0,
+  steps: 0,
 };
 
-const MOCK_INSIGHT = {
-  text: "Your HRV has increased 12% over the past week, suggesting improved autonomic recovery. Consider maintaining your current sleep schedule and moderate exercise intensity. Your circadian rhythm alignment has been excellent -- keep your wake time consistent to preserve this gain.",
-  confidence: 0.87,
+const EMPTY_INSIGHT = {
+  text: "",
+  confidence: 0,
 };
 
-const MOCK_STREAKS = {
-  sleep: 7,
-  mood: 5,
-  recovery: 3,
+const EMPTY_STREAKS = {
+  sleep: 0,
+  mood: 0,
+  recovery: 0,
 };
 
 /* ------------------------------------------------------------------ */
@@ -483,18 +484,108 @@ function StreakTrackers({
 }
 
 /* ------------------------------------------------------------------ */
+/*  Mood State Banner                                                  */
+/* ------------------------------------------------------------------ */
+
+function MoodStateBanner({ moodState, score }: { moodState: string; score: number }) {
+  if (!moodState) return null;
+
+  const config: Record<string, { label: string; description: string; bg: string; border: string; text: string; icon: string }> = {
+    depression_risk: {
+      label: "Depression Risk",
+      description: "Your biometric data indicates significantly low mood markers. Consider reaching out to a healthcare provider.",
+      bg: "bg-blue-500/10",
+      border: "border-blue-500/30",
+      text: "text-blue-400",
+      icon: "!",
+    },
+    low: {
+      label: "Low Mood",
+      description: "Your mood indicators are below baseline. Focus on sleep, movement, and social connection.",
+      bg: "bg-sky-500/10",
+      border: "border-sky-500/30",
+      text: "text-sky-400",
+      icon: "~",
+    },
+    euthymic: {
+      label: "Normal / Stable",
+      description: "Your mood markers are within healthy range. Keep up your current routine.",
+      bg: "bg-emerald-500/10",
+      border: "border-emerald-500/30",
+      text: "text-emerald-400",
+      icon: "\u2713",
+    },
+    elevated: {
+      label: "Elevated Mood",
+      description: "Your mood indicators are above baseline. Monitor for sustained elevation.",
+      bg: "bg-amber-500/10",
+      border: "border-amber-500/30",
+      text: "text-amber-400",
+      icon: "\u2191",
+    },
+    mania_risk: {
+      label: "Mania Risk",
+      description: "Your biometric data indicates unusually elevated mood markers. Consider consulting your healthcare provider.",
+      bg: "bg-red-500/10",
+      border: "border-red-500/30",
+      text: "text-red-400",
+      icon: "!!",
+    },
+  };
+
+  const c = config[moodState] || config.euthymic;
+
+  return (
+    <div className={cn("rounded-xl border-2 p-4", c.bg, c.border)}>
+      <div className="flex items-center gap-3">
+        <div className={cn("flex size-12 items-center justify-center rounded-full text-xl font-bold", c.bg, c.text)}>
+          {c.icon}
+        </div>
+        <div className="flex-1">
+          <div className="flex items-center gap-2">
+            <h2 className={cn("text-lg font-bold", c.text)}>{c.label}</h2>
+            <span className="rounded-full bg-muted px-2 py-0.5 text-xs font-mono text-muted-foreground">
+              Score: {score > 0 ? "+" : ""}{score.toFixed(2)}
+            </span>
+          </div>
+          <p className="mt-0.5 text-sm text-muted-foreground">{c.description}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Empty State                                                        */
+/* ------------------------------------------------------------------ */
+
+function EmptyState() {
+  return (
+    <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-border/60 bg-muted/10 py-16 text-center">
+      <div className="mb-4 flex size-16 items-center justify-center rounded-2xl bg-emerald-500/15">
+        <Heart className="size-8 text-emerald-400" />
+      </div>
+      <h3 className="text-lg font-semibold">No health data yet</h3>
+      <p className="mt-2 max-w-sm text-sm text-muted-foreground">
+        Connect your WHOOP band or seed demo data from Settings to start seeing your health dashboard.
+      </p>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
 /*  Dashboard Page                                                     */
 /* ------------------------------------------------------------------ */
 
 export default function DashboardPage() {
-  const [scores, setScores] = useState(MOCK_SCORES);
-  const [readings, setReadings] = useState(MOCK_READINGS);
-  const [insight, setInsight] = useState(MOCK_INSIGHT);
-  const [streaks, setStreaks] = useState(MOCK_STREAKS);
+  const [scores, setScores] = useState(EMPTY_SCORES);
+  const [readings, setReadings] = useState(EMPTY_READINGS);
+  const [insight, setInsight] = useState(EMPTY_INSIGHT);
+  const [streaks, setStreaks] = useState(EMPTY_STREAKS);
+  const [hasData, setHasData] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Attempt to fetch from real APIs, fall back to mock data
     async function load() {
       try {
         const [scoresRes, readingsRes, insightsRes] = await Promise.allSettled([
@@ -502,42 +593,60 @@ export default function DashboardPage() {
           fetch("/api/readings?days=1"),
           fetch("/api/insights"),
         ]);
+
+        let gotData = false;
+
         if (scoresRes.status === "fulfilled" && scoresRes.value.ok) {
           const d = await scoresRes.value.json();
           if (d?.scores?.length > 0) {
+            gotData = true;
             const s = d.scores[0];
+            const moodState = s.mood_state || "euthymic";
+            const labelMap: Record<string, string> = {
+              euthymic: "Normal",
+              elevated: "Elevated",
+              low: "Low",
+              depression_risk: "Depression Risk",
+              mania_risk: "Mania Risk",
+            };
             setScores({
               mood: s.mood_score ?? 0,
-              moodLabel: s.mood_state === "euthymic" ? "Balanced" : s.mood_state === "elevated" ? "Elevated" : s.mood_state === "low" ? "Low" : s.mood_state === "depression_risk" ? "Depression Risk" : s.mood_state === "mania_risk" ? "Mania Risk" : "Balanced",
-              bodyBattery: s.body_battery ?? 72,
-              bodyBatteryTrend: (s.body_battery ?? 72) > 60 ? "charging" : "draining",
-              hrvRecovery: 78,
-              sleepScore: s.sleep_gpa ? Math.round(s.sleep_gpa * 25) : 85,
-              readiness: s.body_battery ?? 81,
+              moodLabel: labelMap[moodState] || "Normal",
+              moodState,
+              bodyBattery: s.body_battery ?? 0,
+              bodyBatteryTrend: (s.body_battery ?? 0) > 60 ? "charging" : "draining",
+              hrvRecovery: 0,
+              sleepScore: s.sleep_gpa ? Math.round(s.sleep_gpa * 25) : 0,
+              readiness: s.body_battery ?? 0,
             });
           }
         }
+
         if (readingsRes.status === "fulfilled" && readingsRes.value.ok) {
           const d = await readingsRes.value.json();
           if (d?.readings?.length > 0) {
+            gotData = true;
             const r = d.readings[0];
             const m = r.metrics || r;
             setReadings({
-              hrv: m.hrv_rmssd ?? m.hrv_sdnn ?? 48,
-              rhr: m.resting_hr ?? 58,
-              sleepScore: m.sleep_efficiency ?? 85,
-              steps: m.steps ?? 8432,
+              hrv: m.hrv_rmssd ?? m.hrv_sdnn ?? 0,
+              rhr: m.resting_hr ?? 0,
+              sleepScore: m.sleep_efficiency ?? 0,
+              steps: m.steps ?? 0,
             });
           }
         }
+
         if (insightsRes.status === "fulfilled" && insightsRes.value.ok) {
           const d = await insightsRes.value.json();
           if (d?.insight?.ai_insight) {
             setInsight({ text: d.insight.ai_insight, confidence: 0.85 });
           }
         }
+
+        setHasData(gotData);
       } catch {
-        // use mock data
+        // no data
       } finally {
         setLoading(false);
       }
@@ -549,6 +658,20 @@ export default function DashboardPage() {
     return <DashboardSkeleton />;
   }
 
+  if (!hasData) {
+    return (
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight">Dashboard</h1>
+          <p className="text-sm text-muted-foreground">
+            Your health at a glance. Updated in real time.
+          </p>
+        </div>
+        <EmptyState />
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
       <div>
@@ -557,6 +680,9 @@ export default function DashboardPage() {
           Your health at a glance. Updated in real time.
         </p>
       </div>
+
+      {/* Mood State Classification Banner */}
+      <MoodStateBanner moodState={scores.moodState} score={scores.mood} />
 
       {/* Quick Stats */}
       <QuickStats
@@ -578,7 +704,7 @@ export default function DashboardPage() {
       </div>
 
       {/* AI Insight */}
-      <AIInsight text={insight.text} confidence={insight.confidence} />
+      {insight.text && <AIInsight text={insight.text} confidence={insight.confidence} />}
 
       {/* Streaks */}
       <StreakTrackers

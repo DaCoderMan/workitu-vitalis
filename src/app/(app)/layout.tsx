@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { useSession, signOut } from "next-auth/react";
 import {
   LayoutDashboard,
   Moon,
@@ -13,6 +14,7 @@ import {
   Menu,
   X,
   ChevronLeft,
+  LogOut,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -29,8 +31,12 @@ const navItems = [
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const { data: session } = useSession();
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const userName = session?.user?.name || "User";
+  const userEmail = session?.user?.email || "";
+  const initials = userName.split(" ").map((n) => n[0]).join("").toUpperCase().slice(0, 2);
 
   return (
     <div className="flex h-[calc(100vh-3.5rem-1px)] overflow-hidden">
@@ -120,16 +126,27 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         >
           <Avatar className="size-8 border border-border">
             <AvatarFallback className="bg-gradient-to-br from-emerald-500 to-cyan-500 text-xs font-bold text-white">
-              U
+              {initials}
             </AvatarFallback>
           </Avatar>
           {!collapsed && (
-            <div className="min-w-0">
-              <p className="truncate text-sm font-medium">User</p>
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-sm font-medium">{userName}</p>
               <p className="truncate text-xs text-muted-foreground">
-                vitalis user
+                {userEmail}
               </p>
             </div>
+          )}
+          {!collapsed && (
+            <Button
+              variant="ghost"
+              size="icon"
+              className="shrink-0"
+              onClick={() => signOut({ callbackUrl: "/sign-in" })}
+              title="Sign out"
+            >
+              <LogOut className="size-4" />
+            </Button>
           )}
         </div>
       </aside>

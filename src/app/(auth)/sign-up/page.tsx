@@ -13,10 +13,10 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
 import { Eye, EyeOff, ArrowRight } from "lucide-react";
 
-export default function SignInPage() {
+export default function SignUpPage() {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -29,6 +29,21 @@ export default function SignInPage() {
     setLoading(true);
 
     try {
+      // Create account
+      const res = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.error || "Failed to create account");
+        return;
+      }
+
+      // Auto sign-in after registration
       const result = await signIn("credentials", {
         username: email,
         password,
@@ -36,7 +51,7 @@ export default function SignInPage() {
       });
 
       if (result?.error) {
-        setError("Invalid email or password. Please try again.");
+        setError("Account created but sign-in failed. Please sign in manually.");
       } else {
         window.location.href = "/dashboard";
       }
@@ -49,14 +64,12 @@ export default function SignInPage() {
 
   return (
     <div className="relative flex min-h-[calc(100vh-3.5rem-1px)] items-center justify-center px-4 py-12">
-      {/* Background effects */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 left-1/2 h-[500px] w-[700px] -translate-x-1/2 rounded-full bg-gradient-to-br from-emerald-500/10 via-cyan-500/5 to-transparent blur-3xl" />
         <div className="absolute bottom-0 right-0 h-[300px] w-[400px] rounded-full bg-gradient-to-tl from-violet-500/10 to-transparent blur-3xl" />
       </div>
 
       <div className="relative w-full max-w-md">
-        {/* Logo */}
         <div className="mb-8 text-center">
           <Link href="/" className="inline-flex items-center gap-2">
             <div className="flex size-10 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-cyan-500">
@@ -78,9 +91,9 @@ export default function SignInPage() {
 
         <Card className="border-border/50">
           <CardHeader className="text-center">
-            <CardTitle className="text-xl">Welcome back</CardTitle>
+            <CardTitle className="text-xl">Create your account</CardTitle>
             <CardDescription>
-              Sign in to access your health dashboard
+              Start tracking your health with AI-powered insights
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -90,6 +103,22 @@ export default function SignInPage() {
                   {error}
                 </div>
               )}
+
+              <div className="space-y-2">
+                <Label htmlFor="name" className="text-sm">
+                  Full Name
+                </Label>
+                <Input
+                  id="name"
+                  type="text"
+                  placeholder="Your name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                  autoComplete="name"
+                  className="h-10"
+                />
+              </div>
 
               <div className="space-y-2">
                 <Label htmlFor="email" className="text-sm">
@@ -108,26 +137,19 @@ export default function SignInPage() {
               </div>
 
               <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="password" className="text-sm">
-                    Password
-                  </Label>
-                  <Link
-                    href="#"
-                    className="text-xs text-muted-foreground transition-colors hover:text-foreground"
-                  >
-                    Forgot password?
-                  </Link>
-                </div>
+                <Label htmlFor="password" className="text-sm">
+                  Password
+                </Label>
                 <div className="relative">
                   <Input
                     id="password"
                     type={showPassword ? "text" : "password"}
-                    placeholder="Enter your password"
+                    placeholder="At least 6 characters"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
-                    autoComplete="current-password"
+                    minLength={6}
+                    autoComplete="new-password"
                     className="h-10 pr-10"
                   />
                   <button
@@ -154,35 +176,24 @@ export default function SignInPage() {
                   <div className="size-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
                 ) : (
                   <>
-                    Sign In
+                    Create Account
                     <ArrowRight className="ml-1 size-4" />
                   </>
                 )}
               </Button>
             </form>
 
-            <div className="relative my-6">
-              <Separator />
-              <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-card px-3 text-xs text-muted-foreground">
-                or
-              </span>
-            </div>
-
-            <p className="text-center text-sm text-muted-foreground">
-              Don&apos;t have an account?{" "}
+            <p className="mt-6 text-center text-sm text-muted-foreground">
+              Already have an account?{" "}
               <Link
-                href="/sign-up"
+                href="/sign-in"
                 className="font-medium text-emerald-400 transition-colors hover:text-emerald-300"
               >
-                Create one
+                Sign in
               </Link>
             </p>
           </CardContent>
         </Card>
-
-        <p className="mt-6 text-center text-xs text-muted-foreground/60">
-          By signing in, you agree to our Terms of Service and Privacy Policy.
-        </p>
       </div>
     </div>
   );

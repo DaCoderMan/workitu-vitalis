@@ -7,6 +7,14 @@ import type { NextAuthConfig } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import clientPromise from "@/lib/db/client";
+import crypto from "crypto";
+
+function verifyPassword(password: string, stored: string): boolean {
+  const [salt, hash] = stored.split(":");
+  if (!salt || !hash) return false;
+  const testHash = crypto.pbkdf2Sync(password, salt, 1000, 64, "sha512").toString("hex");
+  return hash === testHash;
+}
 
 /**
  * WHOOP OAuth2 provider — custom since next-auth doesn't ship one built-in.
@@ -55,31 +63,43 @@ export const authConfig: NextAuthConfig = {
     // Dev-only credentials provider (admin/admin)
     // -----------------------------------------------------------------------
     Credentials({
-      name: "Dev Login",
+      name: "Login",
       credentials: {
-        username: { label: "Username", type: "text", placeholder: "admin" },
+        username: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const users = [
-          {
-            username: process.env.ADMIN_USER ?? "admin",
-            password: process.env.ADMIN_PASSWORD ?? "admin",
-            id: "admin",
-            name: "Yonatan Perlin",
-            email: process.env.ADMIN_EMAIL ?? "jonathanperlin@gmail.com",
-          },
-        ];
+        const email = credentials?.username as string | undefined;
+        const password = credentials?.password as string | undefined;
+        if (!email || !password) return null;
 
-        const matched = users.find(
-          (u) =>
-            credentials?.username === u.username &&
-            credentials?.password === u.password,
-        );
-
-        if (matched) {
-          return { id: matched.id, name: matched.name, email: matched.email };
+        // Check hardcoded admin
+        const adminUser = process.env.ADMIN_USER ?? "admin";
+        const adminPass = process.env.ADMIN_PASSWORD ?? "admin";
+        const adminEmail = process.env.ADMIN_EMAIL ?? "jonathanperlin@gmail.com";
+        if (
+          (email === adminUser || email === adminEmail) &&
+          password === adminPass
+        ) {
+          return { id: "admin", name: "Admin", email: adminEmail };
         }
+
+        // Check DB users
+        try {
+          const client = await clientPromise;
+          const db = client.db();
+          const user = await db.collection("users").findOne({ email });
+          if (user && user.password && verifyPassword(password, user.password)) {
+            return {
+              id: user._id.toString(),
+              name: user.name as string,
+              email: user.email as string,
+            };
+          }
+        } catch {
+          // DB error — fall through
+        }
+
         return null;
       },
     }),

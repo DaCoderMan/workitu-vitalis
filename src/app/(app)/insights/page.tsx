@@ -396,16 +396,39 @@ export default function InsightsPage() {
   const [report, setReport] = useState(MOCK_WEEKLY_REPORT);
   const [loading, setLoading] = useState(true);
 
+  const [supplements, setSupplements] = useState(MOCK_SUPPLEMENTS);
+  const [dietTips, setDietTips] = useState(MOCK_DIET_TIPS);
+
   useEffect(() => {
     async function load() {
       try {
-        const [insightRes, recsRes] = await Promise.allSettled([
-          fetch("/api/insights"),
-          fetch("/api/recommendations"),
-        ]);
-        if (insightRes.status === "fulfilled" && insightRes.value.ok) {
-          const d = await insightRes.value.json();
-          if (d && d.text) setInsight(d);
+        const res = await fetch("/api/insights");
+        if (res.ok) {
+          const d = await res.json();
+          const rec = d?.insight;
+          if (rec?.ai_insight) {
+            setInsight({
+              text: rec.ai_insight,
+              actions: rec.action_items || MOCK_DAILY_INSIGHT.actions,
+              generatedAt: rec.created_at
+                ? new Date(rec.created_at).toLocaleTimeString()
+                : new Date().toLocaleTimeString(),
+            });
+          }
+          if (rec?.supplements?.length) {
+            setSupplements(
+              rec.supplements.map((s: { name: string; dosage: string; timing: string; evidence_level?: string; reason?: string }) => ({
+                name: s.name,
+                dosage: s.dosage,
+                timing: s.timing,
+                evidence: s.evidence_level || "moderate",
+                reason: s.reason || "",
+              }))
+            );
+          }
+          if (rec?.dietTips?.length) {
+            setDietTips(rec.dietTips);
+          }
         }
       } catch {
         // use mock
@@ -444,8 +467,8 @@ export default function InsightsPage() {
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
-        <SupplementRecommendations supplements={MOCK_SUPPLEMENTS} />
-        <DietSuggestions tips={MOCK_DIET_TIPS} />
+        <SupplementRecommendations supplements={supplements} />
+        <DietSuggestions tips={dietTips} />
       </div>
     </div>
   );

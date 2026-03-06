@@ -443,7 +443,36 @@ export default function MoodPage() {
         ]);
         if (historyRes.status === "fulfilled" && historyRes.value.ok) {
           const d = await historyRes.value.json();
-          if (d && Array.isArray(d) && d.length > 0) setHistory(d);
+          const items = d?.history;
+          if (Array.isArray(items) && items.length > 0) {
+            setHistory(
+              items.map((item: { date: string; mood_score: number }) => ({
+                date: new Date(item.date).toLocaleDateString("en-US", {
+                  month: "short",
+                  day: "numeric",
+                }),
+                score: item.mood_score,
+              }))
+            );
+          }
+        }
+        if (scoresRes.status === "fulfilled" && scoresRes.value.ok) {
+          const d = await scoresRes.value.json();
+          const items = d?.scores;
+          if (Array.isArray(items) && items.length > 0) {
+            const labels = ["Depressed", "Low", "Balanced", "Elevated", "Manic"];
+            setCompass(
+              items.slice(0, 7).map((s: { date: string; mood_score: number }) => {
+                const score = s.mood_score;
+                const idx = Math.min(4, Math.max(0, Math.round((score + 2) * 1.25)));
+                return {
+                  day: new Date(s.date).toLocaleDateString("en-US", { weekday: "short" }),
+                  score,
+                  label: labels[idx],
+                };
+              })
+            );
+          }
         }
       } catch {
         // use mock
