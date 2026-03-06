@@ -48,7 +48,7 @@ const WhoopProvider = {
 };
 
 export const authConfig: NextAuthConfig = {
-  adapter: MongoDBAdapter(clientPromise),
+  adapter: process.env.MONGODB_URI ? MongoDBAdapter(clientPromise) : undefined,
 
   session: {
     strategy: "jwt",
