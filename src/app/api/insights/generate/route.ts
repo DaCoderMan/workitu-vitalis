@@ -3,7 +3,7 @@
 // =============================================================================
 
 import { NextResponse } from "next/server";
-import { auth } from "@/lib/auth-config";
+import { getUserId } from "@/lib/get-user";
 import clientPromise from "@/lib/db/client";
 import type { HealthReading, DailyScore, MoodState } from "@/lib/types";
 
@@ -92,12 +92,7 @@ Respond with ONLY valid JSON in this exact structure:
 
 export async function POST() {
   try {
-    const session = await auth();
-    if (!session?.user?.id) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
-    const userId = session.user.id;
+    const userId = await getUserId();
 
     if (!process.env.DEEPSEEK_API_KEY) {
       return NextResponse.json(

@@ -1,12 +1,10 @@
 import { NextResponse } from "next/server";
-import { auth } from "@/lib/auth-config";
+import { getUserId } from "@/lib/get-user";
 import clientPromise from "@/lib/db/client";
 
 export async function DELETE() {
   try {
-    const session = await auth();
-    if (!session?.user?.id) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    const userId = session.user.id;
+    const userId = await getUserId();
     const client = await clientPromise;
     const db = client.db();
     await Promise.all([

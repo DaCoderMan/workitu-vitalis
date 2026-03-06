@@ -3,17 +3,14 @@
 // =============================================================================
 
 import { NextRequest, NextResponse } from "next/server";
-import { auth } from "@/lib/auth-config";
+import { getUserId } from "@/lib/get-user";
 import clientPromise from "@/lib/db/client";
 
 const WHOOP_TOKEN_URL = "https://api.prod.whoop.com/oauth/oauth2/token";
 
 export async function GET(request: NextRequest) {
   try {
-    const session = await auth();
-    if (!session?.user?.id) {
-      return NextResponse.redirect(new URL("/login", request.url));
-    }
+    const userId = await getUserId();
 
     const searchParams = request.nextUrl.searchParams;
     const code = searchParams.get("code");
@@ -63,12 +60,12 @@ export async function GET(request: NextRequest) {
 
     await db.collection("accounts").updateOne(
       {
-        userId: session.user.id,
+        userId: userId,
         provider: "whoop",
       },
       {
         $set: {
-          userId: session.user.id,
+          userId: userId,
           provider: "whoop",
           type: "oauth",
           access_token: tokens.access_token,

@@ -3,7 +3,7 @@
 // =============================================================================
 
 import { NextRequest, NextResponse } from "next/server";
-import { auth } from "@/lib/auth-config";
+import { getUserId } from "@/lib/get-user";
 import clientPromise from "@/lib/db/client";
 import { parseAppleHealthExport } from "@/lib/apple-health";
 import { validateReading } from "@/lib/validation";
@@ -11,12 +11,7 @@ import type { HealthReading } from "@/lib/types";
 
 export async function POST(request: NextRequest) {
   try {
-    const session = await auth();
-    if (!session?.user?.id) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
-    const userId = session.user.id;
+    const userId = await getUserId();
 
     // Parse multipart form data
     const formData = await request.formData();

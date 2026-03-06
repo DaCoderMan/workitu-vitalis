@@ -3,19 +3,14 @@
 // =============================================================================
 
 import { NextRequest, NextResponse } from "next/server";
-import { auth } from "@/lib/auth-config";
+import { getUserId } from "@/lib/get-user";
 import clientPromise from "@/lib/db/client";
 import { calculateSleepGPA, calculateBaseline } from "@/lib/mood-engine";
 import type { HealthReading } from "@/lib/types";
 
 export async function GET(request: NextRequest) {
   try {
-    const session = await auth();
-    if (!session?.user?.id) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
-    const userId = session.user.id;
+    const userId = await getUserId();
     const searchParams = request.nextUrl.searchParams;
 
     // Parse query parameters
