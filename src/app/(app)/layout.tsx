@@ -59,7 +59,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           )}
           <Button
             variant="ghost"
-            size="icon-xs"
+            size="icon"
             className="hidden md:flex"
             onClick={() => setCollapsed(!collapsed)}
           >
@@ -72,7 +72,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           </Button>
           <Button
             variant="ghost"
-            size="icon-xs"
+            size="icon"
             className="md:hidden"
             onClick={() => setMobileOpen(false)}
           >
@@ -140,7 +140,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         <div className="flex h-12 items-center border-b border-border/40 px-4 md:hidden">
           <Button
             variant="ghost"
-            size="icon-sm"
+            size="icon"
             onClick={() => setMobileOpen(true)}
           >
             <Menu className="size-5" />

@@ -262,9 +262,15 @@ function WhoopSyncCard({
 }) {
   const [syncing, setSyncing] = useState(false);
 
-  const handleSync = useCallback(() => {
+  const handleSync = useCallback(async () => {
     setSyncing(true);
-    setTimeout(() => setSyncing(false), 2000);
+    try {
+      await fetch("/api/whoop/sync", { method: "POST" });
+    } catch {
+      // silent
+    } finally {
+      setSyncing(false);
+    }
   }, []);
 
   return (

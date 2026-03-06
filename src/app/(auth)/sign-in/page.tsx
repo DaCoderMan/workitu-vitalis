@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
 import {
   Card,
@@ -28,12 +29,19 @@ export default function SignInPage() {
     setLoading(true);
 
     try {
-      // In production, call signIn from next-auth
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      // Redirect to dashboard
-      window.location.href = "/dashboard";
+      const result = await signIn("credentials", {
+        username: email,
+        password,
+        redirect: false,
+      });
+
+      if (result?.error) {
+        setError("Invalid email or password. Please try again.");
+      } else {
+        window.location.href = "/dashboard";
+      }
     } catch {
-      setError("Invalid email or password. Please try again.");
+      setError("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }

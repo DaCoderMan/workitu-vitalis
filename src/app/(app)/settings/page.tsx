@@ -91,8 +91,9 @@ function ConnectWhoop() {
             if (connected) {
               setConnected(false);
             } else {
-              // In production, redirect to WHOOP OAuth
-              setConnected(true);
+              const redirectUri = encodeURIComponent(`${window.location.origin}/api/whoop/callback`);
+              const scope = encodeURIComponent("read:recovery read:sleep read:cycles read:workout read:profile read:body_measurement");
+              window.location.href = `https://api.prod.whoop.com/oauth/oauth2/auth?client_id=${process.env.NEXT_PUBLIC_WHOOP_CLIENT_ID || "not-configured"}&redirect_uri=${redirectUri}&response_type=code&scope=${scope}`;
             }
           }}
         >
@@ -158,7 +159,15 @@ function UploadAppleHealth() {
             onDrop={(e) => {
               e.preventDefault();
               setDragActive(false);
-              setUploaded(true);
+              const file = e.dataTransfer.files[0];
+              if (file) {
+                const formData = new FormData();
+                formData.append("file", file);
+                fetch("/api/apple-health/upload", { method: "POST", body: formData })
+                  .then((res) => res.json())
+                  .then(() => setUploaded(true))
+                  .catch(() => {});
+              }
             }}
           >
             <FileText className="mb-2 size-8 text-blue-400/60" />
@@ -169,7 +178,23 @@ function UploadAppleHealth() {
               variant="outline"
               size="sm"
               className="mt-3"
-              onClick={() => setUploaded(true)}
+              onClick={() => {
+                const input = document.createElement("input");
+                input.type = "file";
+                input.accept = ".zip,.xml";
+                input.onchange = (ev) => {
+                  const file = (ev.target as HTMLInputElement).files?.[0];
+                  if (file) {
+                    const formData = new FormData();
+                    formData.append("file", file);
+                    fetch("/api/apple-health/upload", { method: "POST", body: formData })
+                      .then((res) => res.json())
+                      .then(() => setUploaded(true))
+                      .catch(() => {});
+                  }
+                };
+                input.click();
+              }}
             >
               Browse Files
             </Button>
@@ -190,9 +215,20 @@ function PersonalInfoForm() {
   const [height, setHeight] = useState("178");
   const [saved, setSaved] = useState(false);
 
-  const handleSave = () => {
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2000);
+  const handleSave = async () => {
+    try {
+      const res = await fetch("/api/profile", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ age: parseInt(age), weight: parseFloat(weight), height: parseFloat(height) }),
+      });
+      if (res.ok) {
+        setSaved(true);
+        setTimeout(() => setSaved(false), 2000);
+      }
+    } catch {
+      // silent
+    }
   };
 
   return (
@@ -396,9 +432,14 @@ function DeleteDataSection() {
               </Button>
               <Button
                 variant="destructive"
-                onClick={() => {
-                  setOpen(false);
-                  // In production, call delete API
+                onClick={async () => {
+                  try {
+                    await fetch("/api/data/delete", { method: "DELETE" });
+                    setOpen(false);
+                    window.location.reload();
+                  } catch {
+                    setOpen(false);
+                  }
                 }}
               >
                 Yes, delete everything

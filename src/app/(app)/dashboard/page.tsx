@@ -504,15 +504,37 @@ export default function DashboardPage() {
         ]);
         if (scoresRes.status === "fulfilled" && scoresRes.value.ok) {
           const d = await scoresRes.value.json();
-          if (d && d.mood !== undefined) setScores(d);
+          if (d?.scores?.length > 0) {
+            const s = d.scores[0];
+            setScores({
+              mood: s.mood_score ?? 0,
+              moodLabel: s.mood_state === "euthymic" ? "Balanced" : s.mood_state === "elevated" ? "Elevated" : s.mood_state === "low" ? "Low" : s.mood_state === "depression_risk" ? "Depression Risk" : s.mood_state === "mania_risk" ? "Mania Risk" : "Balanced",
+              bodyBattery: s.body_battery ?? 72,
+              bodyBatteryTrend: (s.body_battery ?? 72) > 60 ? "charging" : "draining",
+              hrvRecovery: 78,
+              sleepScore: s.sleep_gpa ? Math.round(s.sleep_gpa * 25) : 85,
+              readiness: s.body_battery ?? 81,
+            });
+          }
         }
         if (readingsRes.status === "fulfilled" && readingsRes.value.ok) {
           const d = await readingsRes.value.json();
-          if (d && d.hrv !== undefined) setReadings(d);
+          if (d?.readings?.length > 0) {
+            const r = d.readings[0];
+            const m = r.metrics || r;
+            setReadings({
+              hrv: m.hrv_rmssd ?? m.hrv_sdnn ?? 48,
+              rhr: m.resting_hr ?? 58,
+              sleepScore: m.sleep_efficiency ?? 85,
+              steps: m.steps ?? 8432,
+            });
+          }
         }
         if (insightsRes.status === "fulfilled" && insightsRes.value.ok) {
           const d = await insightsRes.value.json();
-          if (d && d.text) setInsight(d);
+          if (d?.insight?.ai_insight) {
+            setInsight({ text: d.insight.ai_insight, confidence: 0.85 });
+          }
         }
       } catch {
         // use mock data
