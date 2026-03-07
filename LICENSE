@@ -1,0 +1,45 @@
+Proprietary Software License
+Copyright (c) 2024-2026 Workitu Tech. All rights reserved.
+
+Owner: Yonatan Perlin
+Entity: Workitu Tech
+Location: Kiryat Yam, Israel
+
+TERMS AND CONDITIONS
+
+1. OWNERSHIP
+   All source code, documentation, configurations, scripts, agent tools,
+   skill definitions, and any other materials in this repository
+   ("Software") are the exclusive intellectual property of Workitu Tech.
+
+2. RESTRICTIONS
+   Unless expressly authorized in writing by Workitu Tech, you may NOT:
+   a) Copy, reproduce, or distribute the Software or any part thereof;
+   b) Modify, adapt, translate, or create derivative works;
+   c) Reverse-engineer, decompile, or disassemble the Software;
+   d) Sublicense, lease, rent, or lend the Software;
+   e) Use the Software for commercial purposes;
+   f) Remove or alter any proprietary notices or labels.
+
+3. CONFIDENTIALITY
+   The Software contains confidential and proprietary information
+   including but not limited to: business logic, API configurations,
+   automation workflows, client data structures, and revenue strategies.
+   Access to this repository does not grant any license to use, disclose,
+   or exploit such information.
+
+4. NO WARRANTY
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+   EXPRESS OR IMPLIED. WORKITU TECH SHALL NOT BE LIABLE FOR ANY CLAIM,
+   DAMAGES, OR OTHER LIABILITY ARISING FROM THE USE OF THE SOFTWARE.
+
+5. TERMINATION
+   Any unauthorized use automatically terminates any implied permission
+   to access the Software. Workitu Tech reserves the right to pursue
+   legal remedies for any violation of these terms.
+
+6. GOVERNING LAW
+   This license shall be governed by the laws of the State of Israel.
+   Any disputes shall be resolved in the courts of Haifa, Israel.
+
+For licensing inquiries: contact@workitu.com

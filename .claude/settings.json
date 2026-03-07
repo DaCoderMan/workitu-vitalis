@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(py scripts/deploy-to-vps.py --dry-run --with-token)",
+      "Bash(xargs ls -la)",
+      "Bash(npm install @ai-sdk/anthropic @paypal/react-paypal-js)",
+      "Bash(npm install @ai-sdk/openai-compatible)",
+      "Bash(npx vercel link --yes --project bee-ai-app)",
+      "Bash(npx vercel env add DEEPSEEK_API_KEY production preview development)",
+      "Bash(npx vercel env add MONGODB_URI production)",
+      "Bash(npx vercel env add ADMIN_EMAIL production)"
+    ],
+    "additionalDirectories": [
+      "d:\\Projects\\Workitulife\\src\\app\\(app)\\chat"
+    ]
+  }
+}

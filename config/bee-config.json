@@ -1,0 +1,198 @@
+{
+  "version": "4.0",
+  "last_updated": "2026-03-01",
+  "owner": {
+    "name": "Yonatan Perlin",
+    "email": "contact@workitu.com",
+    "github": "DaCoderMan",
+    "location": "Kiryat Yam, Israel"
+  },
+  "mcp_tools": {
+    "clickup": {
+      "status": "connected",
+      "capabilities": ["search", "get_task", "update_task", "create_task", "create_comment", "get_list", "get_folder", "get_hierarchy", "create_document", "time_tracking"]
+    },
+    "gmail": {
+      "status": "connected",
+      "capabilities": ["search_messages", "read_message", "read_thread", "create_draft", "get_profile"]
+    },
+    "gcal": {
+      "status": "connected",
+      "capabilities": ["list_events", "create_event", "update_event", "delete_event", "find_meeting_times", "find_free_time", "list_calendars"]
+    }
+  },
+  "workspaces": {
+    "workitu_tech": {
+      "space_id": "90189948394",
+      "lists": {
+        "daily_tasks": "901816199648",
+        "tovtech": "901816199651",
+        "bee_tasks": "901816199653",
+        "ebook": "901816199656",
+        "projecthub": "901816199658",
+        "lifesync": "901816199660",
+        "leads": "901816199661",
+        "active_clients": "901816199662",
+        "revenue_tracker": "901816199664",
+        "invoices": "901816199666",
+        "spanish_flow": "901816202085",
+        "prds": "901816203465",
+        "nesbit": "901816211191"
+      },
+      "folders": {
+        "tasks_ops": "901812428898",
+        "projects": "901812428899",
+        "clients_sales": "901812428900",
+        "business_finance": "901812428901"
+      }
+    },
+    "personal_family": {
+      "space_id": "90189948521",
+      "lists": {
+        "medical": "901816199668",
+        "meds": "901816199670",
+        "milan": "901816199672",
+        "ivf": "901816199674",
+        "btl": "901816199675",
+        "tms_legal": "901816199678",
+        "taxes": "901816199680",
+        "budget": "901816199682",
+        "housing_car": "901816199684",
+        "war_profit_radar": "901816356781"
+      },
+      "folders": {
+        "health": "901812428910",
+        "family": "901812428911",
+        "finance": "901812428912",
+        "life_admin": "901812428913"
+      }
+    }
+  },
+  "documents": {
+    "context_boot": {
+      "doc_id": "2kzmny51-658",
+      "page_id": "2kzmny51-1078",
+      "status": "active"
+    },
+    "context_boot_old": {
+      "doc_id": "2kzmny51-638",
+      "status": "DEAD"
+    },
+    "skills_backup": {
+      "doc_id": "2kzmny51-578",
+      "status": "active"
+    }
+  },
+  "infrastructure": {
+    "vps": {
+      "provider": "Hetzner",
+      "ip": "65.109.230.136",
+      "ipv6": "2a01:4f9:c013:829d::/64",
+      "user": "root",
+      "account": "K0285781626",
+      "server_name": "workitulife-prod"
+    },
+    "local_pc": {
+      "name": "SPARTA",
+      "model": "Lenovo IdeaPad Flex 5",
+      "cpu": "Ryzen 7 5825U (8c/16t)",
+      "ram": "16GB",
+      "os": "Windows 11",
+      "ollama_model": "qwen3:4b",
+      "bee_offline_path": "C:\\BeeAgent"
+    },
+    "github": {
+      "org": "DaCoderMan",
+      "brain_repo": "workitu-bee-brain"
+    }
+  },
+  "routing": {
+    "revenue_sales": "leads",
+    "bee_development": "bee_tasks",
+    "medical": "medical",
+    "money_btl": "btl",
+    "budget": "budget",
+    "milan_family": "milan",
+    "ivf": "ivf",
+    "daily": "daily_tasks",
+    "new_product": "prds",
+    "housing_car": "housing_car",
+    "war_opportunities": "war_profit_radar"
+  },
+  "daily_briefing": {
+    "output_dir": "context/daily",
+    "format": "quick_scan_bullets",
+    "sources": ["clickup_overdue", "clickup_due_today", "gcal_today", "gmail_unread_important", "current_state_alerts"],
+    "urgent_threshold": "overdue_or_due_today_or_red_carryforward",
+    "instructions": "scripts/generate-briefing.md"
+  },
+  "autonomous_agent": {
+    "status": "deployed_active",
+    "vps_path": "/var/www/bee-brain/agent",
+    "schedule": "0 8 * * * (daily 8AM IST)",
+    "api_provider": "deepseek",
+    "api_base_url": "https://api.deepseek.com",
+    "daily_model": "deepseek-chat",
+    "weekly_model": "deepseek-reasoner",
+    "log": "/var/log/bee-agent.log",
+    "cost_guard_max_daily_calls": 5
+  },
+  "deployment": {
+    "target": "vercel",
+    "region": "fra1",
+    "github_org": "DaCoderMan",
+    "repo_prefix": "workitu-",
+    "stack": "nextjs-16-tailwind-4-shadcn",
+    "command": "/deploy-prd"
+  },
+  "deployed_projects": [
+    {
+      "name": "workitu-bee-site",
+      "github": "https://github.com/DaCoderMan/workitu-bee-site",
+      "vercel_url": "pending-vercel-login",
+      "deployed_at": "2026-03-01",
+      "prd_source": "manual",
+      "description": "AI automation consulting landing page + portfolio showcase"
+    },
+    {
+      "name": "workitu-voice-translator",
+      "github": "https://github.com/DaCoderMan/workitu-voice-translator",
+      "vercel_url": "https://workitu-voice-translator.vercel.app",
+      "deployed_at": "2026-03-04",
+      "prd_source": "docs/prd-voice-translator.md",
+      "description": "Real-time Hebrew ↔ English voice translator powered by DeepL"
+    }
+  ],
+  "plugins": {
+    "ralph_wiggum": {
+      "status": "active",
+      "commands": ["/ralph-loop", "/cancel-ralph", "/ralph-help"],
+      "hook": "Stop",
+      "state_file": ".claude/ralph-loop.local.md"
+    }
+  },
+  "bee_protocol": {
+    "version": "4.0",
+    "sync_rules": {
+      "discussed": "task_exists",
+      "done": "complete_plus_comment",
+      "decided": "comment_logged"
+    },
+    "streaks": {
+      "revenue_target": 5,
+      "sync_target": 5
+    },
+    "carry_forward": {
+      "session_plus_1": "📌",
+      "session_plus_2": "⚠️",
+      "session_plus_3": "🔴"
+    },
+    "priority_override": [
+      "family_emergency",
+      "health_btl_deadline",
+      "security",
+      "revenue",
+      "everything_else"
+    ]
+  }
+}

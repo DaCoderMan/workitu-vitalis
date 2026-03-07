@@ -1,0 +1,76 @@
+{
+  "version": "1.0",
+  "last_updated": "2026-03-01",
+  "environment": "live",
+  "currency": "USD",
+  "plans": [
+    {
+      "id": "starter",
+      "name": "Starter",
+      "type": "subscription",
+      "price": 150,
+      "interval": "monthly",
+      "features": [
+        "Monitoring & health checks",
+        "Minor fixes & adjustments",
+        "Email support",
+        "Monthly performance report"
+      ]
+    },
+    {
+      "id": "standard",
+      "name": "Standard",
+      "type": "subscription",
+      "price": 500,
+      "interval": "monthly",
+      "features": [
+        "Full automation management",
+        "Priority support",
+        "Weekly reports",
+        "Up to 5 active automations",
+        "ClickUp project board"
+      ]
+    },
+    {
+      "id": "enterprise",
+      "name": "Enterprise",
+      "type": "subscription",
+      "price": 1500,
+      "interval": "monthly",
+      "features": [
+        "Dedicated Bee AI instance",
+        "Unlimited automations",
+        "24/7 priority support",
+        "Custom integrations",
+        "Daily reports",
+        "Direct Slack/Telegram channel"
+      ]
+    }
+  ],
+  "one_time": {
+    "enabled": true,
+    "min_amount": 200,
+    "description": "Custom project engagement"
+  },
+  "webhooks": {
+    "on_subscription_created": [
+      "create_clickup_task",
+      "send_welcome_email",
+      "grant_dashboard_access"
+    ],
+    "on_payment_received": [
+      "create_clickup_task",
+      "send_receipt_email"
+    ],
+    "on_subscription_cancelled": [
+      "update_clickup_task",
+      "send_offboarding_email"
+    ]
+  },
+  "projects": {
+    "bee-site": {
+      "plans_enabled": ["starter", "standard", "enterprise"],
+      "one_time_enabled": true
+    }
+  }
+}

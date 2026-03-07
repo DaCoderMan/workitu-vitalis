@@ -1,0 +1,99 @@
+{
+  "version": "1.1",
+  "schedule": "0 8 * * *",
+  "timezone": "Asia/Jerusalem",
+  "daily_model": "deepseek-chat",
+  "weekly_model": "deepseek-reasoner",
+  "max_tokens": 4096,
+  "brain_repo_path": "/var/www/bee-brain",
+  "briefing_output_dir": "context/daily",
+  "api": {
+    "provider": "deepseek",
+    "base_url": "https://api.deepseek.com",
+    "env_key": "DEEPSEEK_API_KEY"
+  },
+  "notifications": {
+    "method": "clickup_comment",
+    "task_id": "86ewrfp3h",
+    "fallback": "log_only"
+  },
+  "tools_enabled": {
+    "clickup": true,
+    "gmail": true,
+    "gcal": true,
+    "github": true,
+    "site_monitor": true,
+    "content_manager": true,
+    "performance_reporter": true,
+    "pricing_manager": true,
+    "obsidian": true,
+    "gdrive": true,
+    "web_search": true,
+    "clickup_cleanup": true
+  },
+  "cost_guard": {
+    "max_daily_calls": 30,
+    "max_tokens_per_call": 4096
+  },
+  "multi_agent": {
+    "enabled": true,
+    "max_daily_calls": 30,
+    "specialists": {
+      "btl": {
+        "priority": 1,
+        "max_calls": 3,
+        "prompt": "specialists/btl.txt",
+        "tools": ["clickup_*", "gmail_*", "vault_*", "gdrive_*", "web_*"]
+      },
+      "medical": {
+        "priority": 2,
+        "max_calls": 2,
+        "prompt": "specialists/medical.txt",
+        "tools": ["clickup_*", "gmail_*", "gcal_*", "vault_*", "gdrive_*", "web_*"]
+      },
+      "ceo": {
+        "priority": 3,
+        "max_calls": 3,
+        "prompt": "specialists/ceo.txt",
+        "tools": ["clickup_*", "gmail_*", "gcal_*", "vault_*", "gdrive_*", "web_*"]
+      },
+      "marketing": {
+        "priority": 3,
+        "max_calls": 3,
+        "prompt": "specialists/marketing.txt",
+        "tools": ["clickup_*", "gmail_*", "vault_*", "gdrive_*", "web_*"]
+      },
+      "tax": {
+        "priority": 4,
+        "max_calls": 2,
+        "prompt": "specialists/tax.txt",
+        "tools": ["clickup_*", "gmail_*", "vault_*", "gdrive_*", "web_*"]
+      },
+      "investment": {
+        "priority": 4,
+        "max_calls": 2,
+        "prompt": "specialists/investment.txt",
+        "tools": ["clickup_*", "vault_*", "gdrive_*", "web_*"]
+      },
+      "psych": {
+        "priority": 5,
+        "max_calls": 2,
+        "prompt": "specialists/psych.txt",
+        "tools": ["vault_*"]
+      },
+      "napoleon": {
+        "priority": 5,
+        "max_calls": 1,
+        "prompt": "specialists/napoleon.txt",
+        "tools": ["vault_*"]
+      }
+    }
+  },
+  "telegram": {
+    "max_tool_calls_per_message": 8,
+    "max_tokens_per_response": 2048,
+    "conversation_max_messages": 20,
+    "conversation_ttl_seconds": 1800,
+    "rate_limit_per_minute": 10
+  }
+}

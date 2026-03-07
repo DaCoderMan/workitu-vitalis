@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "workitulife-dev",
+      "runtimeExecutable": "C:\\Program Files\\nodejs\\npx.cmd",
+      "runtimeArgs": ["--prefix", "D:\\Projects\\Workitulife", "next", "dev"],
+      "port": 3000
+    }
+  ]
+}

@@ -1,0 +1,557 @@
+﻿
+> workitulife@0.1.0 lint
+> eslint
+
+
+D:\Projects\Workitulife\scripts\n8n-set-password-v2.js
+  2:16  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  3:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  4:22  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+D:\Projects\Workitulife\scripts\n8n-set-password.js
+  2:16  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  3:22  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+D:\Projects\Workitulife\src\app\(app)\contacts\page.tsx
+  17:3  warning  'Edit2' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Projects\Workitulife\src\app\(app)\knowledge\page.tsx
+  53:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\Projects\Workitulife\src\app\(app)\knowledge\page.tsx:53:5
+  51 |
+  52 |   useEffect(() => {
+> 53 |     loadEntries();
+     |     ^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  54 |   }, [loadEntries]);
+  55 |
+  56 |   const handleAdd = async () => {  react-hooks/set-state-in-effect
+
+D:\Projects\Workitulife\src\app\(app)\pricing\page.tsx
+  3:39  warning  'CardDescription' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Projects\Workitulife\src\app\(app)\projects\page.tsx
+  40:65  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Projects\Workitulife\src\app\(app)\settings\page.tsx
+  128:39  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Projects\Workitulife\src\app\api\clickup\tasks\route.ts
+  23:9  warning  'now' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+D:\Projects\Workitulife\src\components\chat\chat-input.tsx
+   6:31  warning  'MicOff' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-unused-vars
+  33:5   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\Projects\Workitulife\src\components\chat\chat-input.tsx:33:5
+  31 |         ? window.SpeechRecognition || window.webkitSpeechRecognition
+  32 |         : null;
+> 33 |     setHasSpeechSupport(!!SR);
+     |     ^^^^^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  34 |   }, []);
+  35 |
+  36 |   useEffect(() => {  react-hooks/set-state-in-effect
+
+D:\Projects\Workitulife\src\components\chat\chat-messages.tsx
+  193:10  warning  'isToolPart' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Projects\Workitulife\src\components\command-palette.tsx
+  150:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\Projects\Workitulife\src\components\command-palette.tsx:150:5
+  148 |
+  149 |   useEffect(() => {
+> 150 |     fetchDynamic(search);
+      |     ^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  151 |   }, [search, fetchDynamic]);
+  152 |
+  153 |   const handleSelect = (href: string) => {  react-hooks/set-state-in-effect
+
+D:\Projects\Workitulife\src\components\dashboard\dashboard-client.tsx
+  94:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\Projects\Workitulife\src\components\dashboard\dashboard-client.tsx:94:5
+  92 |
+  93 |   useEffect(() => {
+> 94 |     setGreeting(getGreeting());
+     |     ^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  95 |     setMotivation(getMotivationalLine());
+  96 |     setDateStr(getDashboardDateString());
+  97 |  react-hooks/set-state-in-effect
+
+D:\Projects\Workitulife\src\components\dashboard\task-item.tsx
+  39:52  error  Error: Cannot call impure function during render
+
+`Date.now` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+D:\Projects\Workitulife\src\components\dashboard\task-item.tsx:39:52
+  37 |
+  38 | export function TaskItem({ task }: TaskItemProps) {
+> 39 |   const isOverdue = task.dueDate && task.dueDate < Date.now();
+     |                                                    ^^^^^^^^^^ Cannot call impure function
+  40 |
+  41 |   return (
+  42 |     <a  react-hooks/purity
+
+D:\Projects\Workitulife\src\components\layout\app-sidebar.tsx
+  154:9  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\Projects\Workitulife\src\components\layout\app-sidebar.tsx:154:9
+  152 |       if (saved) {
+  153 |         const parsed: unknown = JSON.parse(saved);
+> 154 |         setOpenGroups((prev) => normalizeOpenGroupState(parsed, prev));
+      |         ^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  155 |       }
+  156 |     } catch {}
+  157 |   }, []);  react-hooks/set-state-in-effect
+  168:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\Projects\Workitulife\src\components\layout\app-sidebar.tsx:168:5
+  166 |   // Auto-open group when navigating to a route in a closed group
+  167 |   useEffect(() => {
+> 168 |     setOpenGroups((prev) => {
+      |     ^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  169 |       let changed = false;
+  170 |       const next = { ...prev };
+  171 |      react-hooks/set-state-in-effect
+
+D:\Projects\Workitulife\src\lib\auth-config.ts
+  67:11  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Projects\Workitulife\src\lib\db\client.ts
+  11:3  warning  Unused eslint-disable directive (no problems were reported from 'no-var')
+
+D:\Projects\Workitulife\src\lib\db\connect.ts
+  15:3  warning  Unused eslint-disable directive (no problems were reported from 'no-var')
+
+D:\Projects\Workitulife\tests\bee-app.spec.ts
+  4:7  warning  'errors' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+D:\Projects\Workitulife\vault\.obsidian\plugins\obsidian-local-rest-api\main.js
+    254:13    warning  'handler' is assigned a value but never used                           @typescript-eslint/no-unused-vars
+    326:20    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+   1183:41    warning  'raw' is defined but never used                                        @typescript-eslint/no-unused-vars
+   1248:18    warning  'prop' is assigned a value but never used                              @typescript-eslint/no-unused-vars
+   1499:53    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+   1700:42    warning  'options' is defined but never used                                    @typescript-eslint/no-unused-vars
+   1726:47    warning  'options' is defined but never used                                    @typescript-eslint/no-unused-vars
+   1791:47    warning  'options' is defined but never used                                    @typescript-eslint/no-unused-vars
+   2352:11    error    Unexpected aliasing of 'this' to local variable                        @typescript-eslint/no-this-alias
+   2982:20    warning  'ex' is defined but never used                                         @typescript-eslint/no-unused-vars
+   3289:19    warning  'value' is defined but never used                                      @typescript-eslint/no-unused-vars
+   3440:20    warning  'ex' is defined but never used                                         @typescript-eslint/no-unused-vars
+   4063:11    error    Unexpected aliasing of 'this' to local variable                        @typescript-eslint/no-this-alias
+   4266:16    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+   4608:17    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+   4916:24    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+   5459:17    error    The array literal notation [] is preferable                            @typescript-eslint/no-array-constructor
+   6065:18    error    The array literal notation [] is preferable                            @typescript-eslint/no-array-constructor
+   6076:27    error    The array literal notation [] is preferable                            @typescript-eslint/no-array-constructor
+   6312:14    error    The array literal notation [] is preferable                            @typescript-eslint/no-array-constructor
+   6443:15    error    The array literal notation [] is preferable                            @typescript-eslint/no-array-constructor
+   7158:15    warning  'running' is assigned a value but never used                           @typescript-eslint/no-unused-vars
+   7241:42    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+   7804:40    warning  'pub' is defined but never used                                        @typescript-eslint/no-unused-vars
+  11065:24    warning  'ex' is defined but never used                                         @typescript-eslint/no-unused-vars
+  11560:22    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  11576:24    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  11894:39    warning  's' is defined but never used                                          @typescript-eslint/no-unused-vars
+  11901:16    warning  'ex' is defined but never used                                         @typescript-eslint/no-unused-vars
+  11905:39    warning  's' is defined but never used                                          @typescript-eslint/no-unused-vars
+  11912:16    warning  'ex' is defined but never used                                         @typescript-eslint/no-unused-vars
+  12045:40    warning  'record' is defined but never used                                     @typescript-eslint/no-unused-vars
+  12058:42    warning  'record' is defined but never used                                     @typescript-eslint/no-unused-vars
+  12058:50    warning  'length' is defined but never used                                     @typescript-eslint/no-unused-vars
+  12429:16    warning  'ex' is defined but never used                                         @typescript-eslint/no-unused-vars
+  12487:16    warning  'ex' is defined but never used                                         @typescript-eslint/no-unused-vars
+  12599:46    warning  'length' is defined but never used                                     @typescript-eslint/no-unused-vars
+  12920:36    warning  'record' is defined but never used                                     @typescript-eslint/no-unused-vars
+  12924:38    warning  'record' is defined but never used                                     @typescript-eslint/no-unused-vars
+  13180:44    warning  'c' is defined but never used                                          @typescript-eslint/no-unused-vars
+  13256:42    warning  'c' is defined but never used                                          @typescript-eslint/no-unused-vars
+  13398:15    warning  'desc' is assigned a value but never used                              @typescript-eslint/no-unused-vars
+  13525:53    warning  'dpth' is defined but never used                                       @typescript-eslint/no-unused-vars
+  13525:59    warning  'cts' is defined but never used                                        @typescript-eslint/no-unused-vars
+  15931:48    warning  'crl' is defined but never used                                        @typescript-eslint/no-unused-vars
+  16540:20    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  17162:5     error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  17357:18    warning  'ts' is defined but never used                                         @typescript-eslint/no-unused-vars
+  17357:22    warning  'opts' is defined but never used                                       @typescript-eslint/no-unused-vars
+  17360:20    warning  'ts' is defined but never used                                         @typescript-eslint/no-unused-vars
+  17360:24    warning  'format' is defined but never used                                     @typescript-eslint/no-unused-vars
+  17363:14    warning  'ts' is defined but never used                                         @typescript-eslint/no-unused-vars
+  17366:14    warning  'otherZone' is defined but never used                                  @typescript-eslint/no-unused-vars
+  17472:18    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  17559:27    warning  'base' is assigned a value but never used                              @typescript-eslint/no-unused-vars
+  17591:18    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  17653:29    warning  'padTo' is assigned a value but never used                             @typescript-eslint/no-unused-vars
+  17653:36    warning  'floor' is assigned a value but never used                             @typescript-eslint/no-unused-vars
+  18052:16    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  19361:20    warning  'e2' is defined but never used                                         @typescript-eslint/no-unused-vars
+  19368:20    warning  'e2' is defined but never used                                         @typescript-eslint/no-unused-vars
+  21229:14    warning  'f' is defined but never used                                          @typescript-eslint/no-unused-vars
+  21232:19    warning  '_fail' is defined but never used                                      @typescript-eslint/no-unused-vars
+  21235:14    warning  '_value' is defined but never used                                     @typescript-eslint/no-unused-vars
+  21241:19    warning  '_message' is defined but never used                                   @typescript-eslint/no-unused-vars
+  21252:11    warning  '_f' is defined but never used                                         @typescript-eslint/no-unused-vars
+  21255:15    warning  '_f' is defined but never used                                         @typescript-eslint/no-unused-vars
+  21305:5     warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  21306:24    warning  'exports2' is defined but never used                                   @typescript-eslint/no-unused-vars
+  21307:7     warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  21319:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  21332:25    warning  't' is defined but never used                                          @typescript-eslint/no-unused-vars
+  21332:28    warning  'r' is defined but never used                                          @typescript-eslint/no-unused-vars
+  21468:17    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  21477:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  21480:17    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  21483:15    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  21532:19    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  21535:15    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  21542:15    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  21564:17    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  21608:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  21667:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  21676:11    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  21706:17    error    Unexpected aliasing of 'this' to local variable                        @typescript-eslint/no-this-alias
+  21713:17    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  21724:19    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  21732:17    error    Unexpected aliasing of 'this' to local variable                        @typescript-eslint/no-this-alias
+  21737:17    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  21740:17    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  21755:17    error    Unexpected aliasing of 'this' to local variable                        @typescript-eslint/no-this-alias
+  21762:17    error    Unexpected aliasing of 'this' to local variable                        @typescript-eslint/no-this-alias
+  21790:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  21791:17    error    Unexpected aliasing of 'this' to local variable                        @typescript-eslint/no-this-alias
+  21803:17    error    Unexpected aliasing of 'this' to local variable                        @typescript-eslint/no-this-alias
+  21818:11    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  21821:15    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  21851:19    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  21864:17    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  21945:230   warning  '_2' is defined but never used                                         @typescript-eslint/no-unused-vars
+  21945:277   warning  '_2' is defined but never used                                         @typescript-eslint/no-unused-vars
+  21946:219   warning  '_2' is defined but never used                                         @typescript-eslint/no-unused-vars
+  21946:266   warning  '_2' is defined but never used                                         @typescript-eslint/no-unused-vars
+  22605:47    warning  'success' is defined but never used                                    @typescript-eslint/no-unused-vars
+  22605:56    warning  'failure' is defined but never used                                    @typescript-eslint/no-unused-vars
+  22621:16    warning  'q2' is defined but never used                                         @typescript-eslint/no-unused-vars
+  22623:25    warning  '_2' is defined but never used                                         @typescript-eslint/no-unused-vars
+  22631:14    warning  '_2' is defined but never used                                         @typescript-eslint/no-unused-vars
+  22632:13    warning  '_2' is defined but never used                                         @typescript-eslint/no-unused-vars
+  22633:20    warning  '_2' is defined but never used                                         @typescript-eslint/no-unused-vars
+  22634:14    warning  '_2' is defined but never used                                         @typescript-eslint/no-unused-vars
+  22640:25    warning  '_2' is defined but never used                                         @typescript-eslint/no-unused-vars
+  22641:22    warning  '_2' is defined but never used                                         @typescript-eslint/no-unused-vars
+  22642:25    warning  '_2' is defined but never used                                         @typescript-eslint/no-unused-vars
+  22643:25    warning  '_2' is defined but never used                                         @typescript-eslint/no-unused-vars
+  22651:18    warning  '_2' is defined but never used                                         @typescript-eslint/no-unused-vars
+  22654:23    warning  '_2' is defined but never used                                         @typescript-eslint/no-unused-vars
+  22655:1608  warning  '_b' is defined but never used                                         @typescript-eslint/no-unused-vars
+  22657:22    warning  '_2' is defined but never used                                         @typescript-eslint/no-unused-vars
+  22659:17    warning  '_2' is defined but never used                                         @typescript-eslint/no-unused-vars
+  22661:205   warning  '_2' is defined but never used                                         @typescript-eslint/no-unused-vars
+  22663:216   warning  '_2' is defined but never used                                         @typescript-eslint/no-unused-vars
+  22665:244   warning  '_3' is defined but never used                                         @typescript-eslint/no-unused-vars
+  22665:248   warning  '_4' is defined but never used                                         @typescript-eslint/no-unused-vars
+  22680:250   warning  '_2' is defined but never used                                         @typescript-eslint/no-unused-vars
+  22680:254   warning  'postfix' is defined but never used                                    @typescript-eslint/no-unused-vars
+  22681:252   warning  '_2' is defined but never used                                         @typescript-eslint/no-unused-vars
+  22681:256   warning  'postfix' is defined but never used                                    @typescript-eslint/no-unused-vars
+  22682:42    warning  '_2' is defined but never used                                         @typescript-eslint/no-unused-vars
+  22715:242   warning  '_3' is defined but never used                                         @typescript-eslint/no-unused-vars
+  22715:246   warning  '_4' is defined but never used                                         @typescript-eslint/no-unused-vars
+  22722:244   warning  '_3' is defined but never used                                         @typescript-eslint/no-unused-vars
+  22722:248   warning  '_4' is defined but never used                                         @typescript-eslint/no-unused-vars
+  22725:336   warning  '_22' is defined but never used                                        @typescript-eslint/no-unused-vars
+  22725:341   warning  '_3' is defined but never used                                         @typescript-eslint/no-unused-vars
+  22754:47    warning  'success' is defined but never used                                    @typescript-eslint/no-unused-vars
+  22754:56    warning  'failure' is defined but never used                                    @typescript-eslint/no-unused-vars
+  22770:19    warning  'q2' is defined but never used                                         @typescript-eslint/no-unused-vars
+  22771:28    warning  'q2' is defined but never used                                         @typescript-eslint/no-unused-vars
+  22781:19    warning  'q2' is defined but never used                                         @typescript-eslint/no-unused-vars
+  22821:20    warning  'q2' is defined but never used                                         @typescript-eslint/no-unused-vars
+  22822:21    warning  'q2' is defined but never used                                         @typescript-eslint/no-unused-vars
+  22828:21    warning  'q2' is defined but never used                                         @typescript-eslint/no-unused-vars
+  22870:20    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  22884:57    warning  'message' is defined but never used                                    @typescript-eslint/no-unused-vars
+  23101:11    error    Unexpected aliasing of 'this' to local variable                        @typescript-eslint/no-this-alias
+  23557:14    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  23561:14    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  24012:16    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  24019:16    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  24030:16    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  24039:15    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  24040:16    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  24123:20    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  24129:21    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  24175:24    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  24176:22    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  24177:18    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  24178:16    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  24262:18    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  24315:16    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  24336:41    warning  'options' is defined but never used                                    @typescript-eslint/no-unused-vars
+  24406:25    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  24422:36    warning  'options' is defined but never used                                    @typescript-eslint/no-unused-vars
+  24422:45    warning  'codec' is defined but never used                                      @typescript-eslint/no-unused-vars
+  24435:35    warning  'options' is defined but never used                                    @typescript-eslint/no-unused-vars
+  24435:44    warning  'codec' is defined but never used                                      @typescript-eslint/no-unused-vars
+  27261:19    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  27262:21    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  27366:19    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  27394:26    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  27498:26    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  27513:26    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  27521:26    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  27565:16    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  27850:16    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  27851:16    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  27913:13    error    Unexpected aliasing of 'this' to local variable                        @typescript-eslint/no-this-alias
+  28015:16    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  28016:16    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  28043:16    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  36821:19    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  37005:16    warning  'err' is defined but never used                                        @typescript-eslint/no-unused-vars
+  37122:16    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  37256:16    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  37279:23    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  37577:16    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  37588:16    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  37630:18    warning  's' is defined but never used                                          @typescript-eslint/no-unused-vars
+  37634:16    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  37646:18    warning  's' is defined but never used                                          @typescript-eslint/no-unused-vars
+  37650:16    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  37661:16    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  37673:18    warning  'm2' is defined but never used                                         @typescript-eslint/no-unused-vars
+  37677:16    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  37689:18    warning  's' is defined but never used                                          @typescript-eslint/no-unused-vars
+  37693:16    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  38044:16    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  38060:16    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  38197:11    error    Unexpected aliasing of 'this' to local variable                        @typescript-eslint/no-this-alias
+  38371:16    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  38381:9     warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  38383:16    warning  'calleeThrows' is defined but never used                               @typescript-eslint/no-unused-vars
+  38386:18    warning  'gOPDthrows' is defined but never used                                 @typescript-eslint/no-unused-vars
+  38484:9     warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  38983:16    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  39682:16    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  39708:17    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  40113:16    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  40120:16    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  40131:16    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  40140:15    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  40141:16    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  40224:20    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  40230:21    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  40337:15    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  40505:16    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  40828:16    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  40835:16    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  40846:16    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  40855:15    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  40856:16    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  40939:20    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  40945:21    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  41227:17    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  41448:11    error    Unexpected aliasing of 'this' to local variable                        @typescript-eslint/no-this-alias
+  41692:16    warning  'err' is defined but never used                                        @typescript-eslint/no-unused-vars
+  41833:17    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  41834:14    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  41858:18    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  41901:16    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  41911:18    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  41972:20    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  42396:16    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  42403:16    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  42414:16    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  42423:15    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  42424:16    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  42507:20    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  42513:21    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  42574:18    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  42575:17    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  42694:9     warning  'path2' is assigned a value but never used                             @typescript-eslint/no-unused-vars
+  42694:17    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  42695:14    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  42950:14    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  42955:17    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  42957:18    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  42958:16    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  43276:11    error    Unexpected aliasing of 'this' to local variable                        @typescript-eslint/no-this-alias
+  43307:11    error    Unexpected aliasing of 'this' to local variable                        @typescript-eslint/no-this-alias
+  43328:11    error    Unexpected aliasing of 'this' to local variable                        @typescript-eslint/no-this-alias
+  43422:16    warning  'err' is defined but never used                                        @typescript-eslint/no-unused-vars
+  43539:7     error    Unexpected aliasing of 'this' to local variable                        @typescript-eslint/no-this-alias
+  43614:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  43810:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  43841:11    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  43978:11    warning  'e' is assigned a value but never used                                 @typescript-eslint/no-unused-vars
+  43999:11    warning  'e' is assigned a value but never used                                 @typescript-eslint/no-unused-vars
+  44067:11    warning  'error' is assigned a value but never used                             @typescript-eslint/no-unused-vars
+  44085:11    warning  'error' is assigned a value but never used                             @typescript-eslint/no-unused-vars
+  44126:13    warning  'e' is assigned a value but never used                                 @typescript-eslint/no-unused-vars
+  44330:23    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  44463:17    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  44470:19    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  45320:16    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  45322:17    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  45479:18    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  45664:16    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  45754:17    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  45757:17    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  45949:11    error    Unexpected aliasing of 'this' to local variable                        @typescript-eslint/no-this-alias
+  45980:11    error    Unexpected aliasing of 'this' to local variable                        @typescript-eslint/no-this-alias
+  46190:11    error    Unexpected aliasing of 'this' to local variable                        @typescript-eslint/no-this-alias
+  46304:19    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  46306:15    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  46407:24    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  46520:16    warning  'err' is defined but never used                                        @typescript-eslint/no-unused-vars
+  46524:76    warning  'source' is defined but never used                                     @typescript-eslint/no-unused-vars
+  46871:15    error    Unexpected aliasing of 'this' to local variable                        @typescript-eslint/no-this-alias
+  47130:33    warning  'statusCode' is defined but never used                                 @typescript-eslint/no-unused-vars
+  47244:16    warning  'err' is defined but never used                                        @typescript-eslint/no-unused-vars
+  47257:16    warning  'err' is defined but never used                                        @typescript-eslint/no-unused-vars
+  47275:18    warning  'err' is defined but never used                                        @typescript-eslint/no-unused-vars
+  47298:16    warning  'err' is defined but never used                                        @typescript-eslint/no-unused-vars
+  47834:12    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  47918:16    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  48017:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48038:17    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48047:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48060:15    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48066:15    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48079:11    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48085:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48106:17    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48110:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48114:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48121:17    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48131:17    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48143:17    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48169:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48221:15    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48227:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48303:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48307:15    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48309:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48329:9     warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48331:9     warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48343:9     warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48360:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48367:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48374:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48378:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48382:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48386:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48390:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48394:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48400:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48407:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48411:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48417:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48418:15    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48423:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48432:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48459:15    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48465:11    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48469:11    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48474:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48478:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48482:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48488:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48492:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48496:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48500:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48504:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48508:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48512:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48518:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48519:15    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48523:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48525:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48546:13    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  48565:11    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  48572:10    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  48636:10    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  48651:9     warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48700:9     warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48909:15    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48926:15    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48935:15    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48937:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  48976:15    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  49027:15    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  49032:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  49034:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  49499:11    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  49717:21    warning  '_onComment' is defined but never used                                 @typescript-eslint/no-unused-vars
+  49717:33    warning  '_onChompKeep' is defined but never used                               @typescript-eslint/no-unused-vars
+  49826:11    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  50273:14    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  50535:7     warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  50688:24    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  51560:23    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  51596:9     warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  52722:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  52731:13    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  53583:16    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  53803:9     warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  53975:24    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  55176:24    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  55576:17    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  55770:17    warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+  56579:16    warning  'TablePartsNotFound2' is defined but never used                        @typescript-eslint/no-unused-vars
+  56607:16    warning  'TablePartsNotFound2' is defined but never used                        @typescript-eslint/no-unused-vars
+  56634:16    warning  'TablePartsNotFound2' is defined but never used                        @typescript-eslint/no-unused-vars
+  56858:35    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  56859:24    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  56860:24    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  56864:34    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  56869:30    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  56877:30    error    A `require()` style import is forbidden                                @typescript-eslint/no-require-imports
+  57224:14    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  57309:16    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  57504:16    warning  'e' is defined but never used                                          @typescript-eslint/no-unused-vars
+  57981:29    warning  'next' is defined but never used                                       @typescript-eslint/no-unused-vars
+  57989:31    warning  'next' is defined but never used                                       @typescript-eslint/no-unused-vars
+  58537:1     warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+
+Γ£û 410 problems (118 errors, 292 warnings)
+  5 errors and 2 warnings potentially fixable with the `--fix` option.
+
